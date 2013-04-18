@@ -1,2 +1,52 @@
-\section{Measures}
-\label{measures}
+\section{Misure}
+Il nostro recommender system è stato testato su 
+
+Passant D 
+Misura di passant diretta; Indica il numero di archi diretti che collegano i film a e b
+Considerato che il grafo preso in considerazione è orientato, vanno presi sia gli archi che vanno da a a b, sia gli archi che vanno da b ad a.
+Cd(n,ra,rb) restituisce il numero di archi che vanno dal film a al film b. 
+Cd(n,rb,ra) restituisce il numero di archi che vanno dal film b al film a.
+
+Passant I 
+Indica la distanza indiretta trai film presi in esame; il valore restituito sta ad indicare il numero di archi che mettono in relazione i due film passanti attraverso delle risorse condivise.
+
+Cio(n,ra,rb) indica il numero di archi che soddisfano la seguente proprietà:
+data una tripla RDF: soggetto – predicato – oggetto, si sommano gli archi contenuti nelle triple rdf aventi come soggetti i due film in questione e come oggetto un film in comune ad entrambi le triple rdf.
+ra – predicato – oggetto1
+rb – predicato – oggetto1
+Cii(n,ra,rb) indica il numero di archi che soddisfano la seguente proprietà:
+data una tripla RDF: soggetto – predicato – oggetto, si sommano gli archi contenuti nelle triple rdf aventi come oggetti i due film in questione e come soggetto un film in comune ad entrambi le triple RDF.
+oggetto1 – predicato – ra
+oggetto1 – predicato – rb
+
+Passant C
+Indica la distanza combinata tra i due film in questione utilizzando sia la distanza indiretta, che quella diretta.
+
+Nostra
+Si prendono in considerazione sia gli archi diretti che uniscono a e b, si gli archi indiretti, cioè quelli che legano a e b ad un oggetto o soggetto comune.
+Un link è un collegamento diretto tra due film con un suo peso dato dalla produttoria dei pesi degli archi precedentemente trovati.
+La distanza coincide con la sommatoria del peso di ogni link.
+
+PROFILI
+Simple
+Il profilo coincide con l'insieme dei film valutati positivamente (4 e 5 considerati in egual misura)
+Simple negative
+I film valutati 4 e 5 sono nell'insieme dei positivi. I film valutati 1 e 2 sono nell'insieme dei negativi.
+Voted Nostra 
+Il profilo è l'insieme dei film visti, pesati secondo la formula:
+votazioni dei film visti - voto medio dei film.
+Voted Musto 
+Il profilo è l'insieme dei film visti, pesati secondo la formula:
+Voto massimo + 1 - voto del film visto. 
+
+
+
+\begin{figure}[htbp]
+  \centering
+    \label{LDSD}
+    \begin{equation}
+        LDSD_{d}(r_{a},r_{b}) \quad = \quad \frac{1} {1+C_{d}(n,r_{a},r_{b})+C_{d}(n,r_{b},r_{a})}
+    \end{equation}
+      \caption{LDSD Distance}
+      \label{LDSD1}
+\end{figure}

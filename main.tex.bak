@@ -3,8 +3,6 @@
 \usepackage[round,numbers]{natbib}
 \usepackage{hyperref}
 \usepackage{amsmath}
-\usepackage{tikz}
-\usetikzlibrary{arrows}
 
 \title{Linked Open Data for content-based recommender systems} % Title
 \author{Luciano \textsc{Quercia}\\Simone \textsc{Rutigliano} }
@@ -14,6 +12,7 @@
 \begin{document}
 
 \maketitle	
+
 
 \input{introduction}
 \input{relatedworks}
