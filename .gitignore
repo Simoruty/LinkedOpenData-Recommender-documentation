@@ -32,3 +32,6 @@
 *.vrb
 *.xdy
 *.pdf
+*.bak
+*.ini
+
