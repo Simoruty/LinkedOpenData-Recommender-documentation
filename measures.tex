@@ -10,51 +10,46 @@ Le prime tre sono descritte in \citet{passant2010measuring}, la quarta è stata 
 \subsubsection{Passant Direct}
 La distanza diretta. Indica il numero di archi diretti che collegano i film $a$ e $b$. Tenendo conto che il grafo preso in considerazione è orientato, vanno presi gli archi in entrambe le direzioni.
 
-In maniera formale, $C_d(n,r_a,r_b)$ restituisce il numero di archi che vanno dal film $a$ al film $b$. 
-$C_d(n,r_b,r_a)$ restituisce il numero di archi che vanno dal film $b$ al film $a$.
-
-La formula della distanza completa sarà quindi:
+In maniera formale, definita $$C_{d}(f_a,f_b) = \left\Big\vert \left\Big\{ e \in Edges \  \big| \  (f_a \xrightarrow{~e~} f_b ) \right\} \right\vert$$ la formula della distanza completa sarà quindi:
 
 %\begin{figure}[htbp]
 %  \centering
 %    \label{LDSD}
-    \begin{equation}
-        P_{d}(r_{a},r_{b}) = \frac{1} {1+C_{d}(n,r_{a},r_{b})+C_{d}(n,r_{b},r_{a})}
-    \end{equation}
+%    \begin{equation}
+%        P_{d}(r_{a},r_{b}) = \frac{1} {1+C_{d}(n,r_{a},r_{b})+C_{d}(n,r_{b},r_{a})}
+%    \end{equation}
 %      \caption{LDSD Distance}
 %      \label{LDSD1}
 %\end{figure}
 
+    \begin{equation}
+        P_{d}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})}
+    \end{equation}
 
 
 
 \subsubsection{Passant Indirect}
 
-Indica la distanza indiretta trai film presi in esame; il valore restituito sta ad indicare il numero di archi che mettono in relazione i due film passanti attraverso delle risorse condivise.
+Indica la distanza indiretta trai film presi in esame; il valore restituito sta ad indicare il numero di archi che mettono in relazione i due film passanti attraverso dei film in comune.
 
-Formalmente, dati:
-
-$$C_{io}(n,r_a,r_b) = \left\vert \left\{ o \  | \  (r_a \  p \  o ) \wedge (r_b \  p \  o) \right\} \right\vert \text{, con} \ p \in P$$
-$$C_{ii}(n,r_a,r_b) = \left\vert \left\{ s \  | \  ( s \  p \  r_a ) \wedge ( s \  p \  r_b) \right\} \right\vert \text{,~con} \  p \in P$$ 
+Formalmente, definiti:
+$$C_{io}(f_a,f_b) = \left\Big\vert \left\Big\{ o \  \big| \  (f_a \xrightarrow{~e~} o ) \wedge (f_b \xrightarrow{~e~} o) \right\} \right\vert$$
+$$C_{ii}(f_a,f_b) = \left\Big\vert \left\Big\{ s \  \big| \  ( s \xrightarrow{~e~} f_a ) \wedge ( s \xrightarrow{~e~} f_b) \right\} \right\vert$$ 
+$$\text{con} \ e \in Edges  , \qquad f_a,f_b,o,s \in Films $$
 
 la formula indiretta di Passant è:
-
     \begin{equation}
-        P_{i}(r_{a},r_{b}) = \frac{1} {1+C_{io}(n,r_{a},r_{b})+C_{ii}(n,r_{b},r_{a})}
+        P_{i}(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{b},f_{a})}
     \end{equation}
-
-indica il numero di archi che collegano indirettamendata una coppia di triple RDF (soggetto–predicato–oggetto), si sommano gli archi contenuti nelle triple RDF aventi come soggetti i due film in questione e come oggetto un film in comune ad entrambe le triple RDF.
-$r_a$ – predicato – $o_1$
-$r_b$ – predicato – $0_1$
-Cii(n,ra,rb) indica il numero di archi che soddisfano la seguente proprietà:
-data una tripla RDF: soggetto – predicato – oggetto, si sommano gli archi contenuti nelle triple rdf aventi come oggetti i due film in questione e come soggetto un film in comune ad entrambi le triple RDF.
-oggetto1 – predicato – ra
-oggetto1 – predicato – rb
-
 
 
 \subsubsection{Passant Combinated}
-Indica la distanza combinata tra i due film in questione utilizzando sia la distanza indiretta, che quella diretta.
+Una distanza che combina le due distanze precedenti secondo la formula:
+
+    \begin{equation}
+P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{b},f_{a})}
+    \end{equation}
+
 
 Nostra
 Si prendono in considerazione sia gli archi diretti che uniscono a e b, si gli archi indiretti, cioè quelli che legano a e b ad un oggetto o soggetto comune.
