@@ -18,18 +18,15 @@ In poche parole il modello RDF è costituito da triple, della forma soggetto-pre
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=.9\textwidth]
-    {./images/triples1-crop}
+  \includegraphics[width=.9\textwidth]{./images/triples1-crop}
 \end{figure}
 
 Questo insieme di triple RDF (o grafo) può essere espresso, allo scopo di essere scambiato tra applicazioni e pubblicato sul web, in vari formati di serializzazione.
 
+\clearpage
+
 Ad esempio in RDF/XML:
 
-\newcommand\Small{\fontsize{8}{10}\selectfont}
-\newcommand*\LSTfont{%
-  \Small\ttfamily\SetTracking{encoding=*}{-50}\lsstyle}
-\lstset{ basicstyle=\LSTfont, columns=fullflexible, xleftmargin=5mm, framexleftmargin=5mm, numbers=left, stepnumber=1, breaklines=true, breakatwhitespace=false, numberstyle=\footnotesize, numbersep=5pt, tabsize=2, frame=lines, captionpos=b}
 \begin{lstlisting}
 <?xml version="1.0"?>
 <rdf:RDF
@@ -45,6 +42,8 @@ Ad esempio in RDF/XML:
     </rdf:Description>
 </rdf:RDF>
 \end{lstlisting}
+
+
 La caratteristica più importante di tale modello, che si sposa con la visione Linked Data, è usare Uniform Resource Identifier (URI).
 
 Tornando all’esempio del monumento, supponiamo che i due dataset (amministrazione locale e sovrintendenza) siano stati pubblicati come Linked Data. Per identificare i monumenti, il dataset delle sovrintendenza usa URL (del tipo \emph{http://cultural-heritage-example.org/monument/XYZ}). Il contenuto digitale di tali URL corrisponde alla descrizione dettagliata dei monumenti.
