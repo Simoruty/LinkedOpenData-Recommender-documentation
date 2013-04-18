@@ -1,4 +1,5 @@
-\documentclass{article}
+\documentclass[a4paper,12pt,oneside,onecolumn,draft,notitlepage]{article}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[round,numbers]{natbib}
 \usepackage{hyperref}
@@ -13,7 +14,6 @@
 \newcommand*\LSTfont{%
   \Small\ttfamily\SetTracking{encoding=*}{-50}\lsstyle}
 
-
 \title{Linked Open Data for content-based recommender systems} % Title
 \author{Luciano \textsc{Quercia}\\Simone \textsc{Rutigliano} }
 \date{\today}
@@ -25,9 +25,9 @@
 
 \input{introduction}
 \input{relatedworks}
-\input{measures}
 \input{project}
 \input{experiment}
+\input{measures}
 
 \bibliographystyle{abbrvnat}
 \bibliography{mybib}
