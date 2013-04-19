@@ -10,7 +10,7 @@ Le prime tre sono descritte in \citet{passant2010measuring}, la quarta è stata 
 \subsubsection{Passant Direct}
 La distanza diretta. Indica il numero di archi diretti che collegano i film $a$ e $b$. Tenendo conto che il grafo preso in considerazione è orientato, vanno presi gli archi in entrambe le direzioni.
 
-In maniera formale, definita $$C_{d}(f_a,f_b) = \left\Big\vert \left\Big\{ e \in Edges \  \big| \  (f_a \xrightarrow{~e~} f_b ) \right\} \right\vert$$ la formula della distanza completa sarà quindi:
+In maniera formale, definita $$C_{d}(f_a,f_b) = \left\vert \left\{ e \in Edges \  | \  (f_a \xrightarrow{~e~} f_b ) \right\} \right\vert$$ la formula della distanza completa sarà quindi:
 
 %\begin{figure}[htbp]
 %  \centering
@@ -33,13 +33,13 @@ In maniera formale, definita $$C_{d}(f_a,f_b) = \left\Big\vert \left\Big\{ e \in
 Indica la distanza indiretta trai film presi in esame; il valore restituito sta ad indicare il numero di archi che mettono in relazione i due film passanti attraverso dei film in comune.
 
 Formalmente, definiti:
-$$C_{io}(f_a,f_b) = \left\Big\vert \left\Big\{ o \  \big| \  (f_a \xrightarrow{~e~} o ) \wedge (f_b \xrightarrow{~e~} o) \right\} \right\vert$$
-$$C_{ii}(f_a,f_b) = \left\Big\vert \left\Big\{ s \  \big| \  ( s \xrightarrow{~e~} f_a ) \wedge ( s \xrightarrow{~e~} f_b) \right\} \right\vert$$ 
+$$C_{io}(f_a,f_b) = \left\vert \left\{ o \  | \  (f_a \xrightarrow{~e~} o ) \wedge (f_b \xrightarrow{~e~} o) \right\} \right\vert$$
+$$C_{ii}(f_a,f_b) = \left\vert \left\{ s \  | \  ( s \xrightarrow{~e~} f_a ) \wedge ( s \xrightarrow{~e~} f_b) \right\} \right\vert$$ 
 $$\text{con} \ e \in Edges  , \qquad f_a,f_b,o,s \in Films $$
 
 la formula indiretta di Passant è:
     \begin{equation}
-        P_{i}(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{b},f_{a})}
+        P_i(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{a},f_{b})}
     \end{equation}
 
 
@@ -47,11 +47,11 @@ la formula indiretta di Passant è:
 Una distanza che combina le due distanze precedenti secondo la formula:
 
     \begin{equation}
-P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{b},f_{a})}
+P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})+C_{io}(f_{a},f_{b})+C_{ii}(f_{a},f_{b})}
     \end{equation}
 
 
-Nostra
+\subsubsection{Nostra}
 La nostra distanza conta sia gli archi diretti che gli archi indiretti (come descritto in \ref{PassantI} che uniscono i film $a$ e $b$, si , cioè quelli che legano a e b ad un oggetto o soggetto comune.
 Un link è un collegamento diretto tra due film con un suo peso dato dalla produttoria dei pesi degli archi precedentemente trovati.
 La distanza coincide con la sommatoria del peso di ogni link.
