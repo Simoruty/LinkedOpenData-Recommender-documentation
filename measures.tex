@@ -29,23 +29,24 @@ In maniera formale, definita $$C_{d}(f_a,f_b) = \left\vert \left\{ e \in Edges \
 \subsubsection{Passant Combinated}
 \label{PassantC}
 
-La distanza combinata compone la precedente distanza diretta con una misura che
-prende in considerazione gli archi che collegano due film  secondo la formula:
+La distanza combinata compone la precedente distanza diretta con una misura
+(PassantI) che prende in considerazione i percorsi che uniscono due film
+attraverso un film in comune.
 
-Indica la distanza indiretta trai film presi in esame; il valore restituito sta
-ad indicare il numero di archi che mettono in relazione i due film passanti attraverso dei film in comune.
+PassantI restituisce un valore che indica il numero di archi che
+mettono in relazione i due film attraverso dei film in comune.
 
 Formalmente, definiti:
-$$C_{io}(f_a,f_b) = \left\vert \left\{ o \  | \  (f_a \xrightarrow{~e~} o ) \wedge (f_b \xrightarrow{~e~} o) \right\} \right\vert$$
-$$C_{ii}(f_a,f_b) = \left\vert \left\{ s \  | \  ( s \xrightarrow{~e~} f_a ) \wedge ( s \xrightarrow{~e~} f_b) \right\} \right\vert$$ 
-$$\text{con} \ e \in Edges  , \qquad f_a,f_b,o,s \in Films $$
+$$C_{io}(f_a,f_b) = \left\vert \left\{ f \  | \  (f_a \xrightarrow{~e~} f ) \wedge (f_b \xrightarrow{~e~} f) \right\} \right\vert$$
+$$C_{ii}(f_a,f_b) = \left\vert \left\{ f \  | \  ( f \xrightarrow{~e~} f_a ) \wedge ( f \xrightarrow{~e~} f_b) \right\} \right\vert$$ 
+$$\text{con} \ e \in Edges  , \qquad f_a,f_b,f \in Films $$
 
 la formula indiretta di Passant è:
     \begin{equation}
         P_i(f_{a},f_{b}) = \frac{1} {1+C_{io}(f_{a},f_{b})+C_{ii}(f_{a},f_{b})}
     \end{equation}
 
-
+La formula combinata sarà:
 
     \begin{equation}
 P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})+C_{io}(f_{a},f_{b})+C_{ii}(f_{a},f_{b})}
@@ -53,30 +54,36 @@ P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})+C_{io}(f_
 
 
 \subsubsection{Passant Direct Weighted}
-La nostra distanza prende in considerazione sia gli archi diretti che gli archi indiretti (quelli che uniscono i film $a$ e $b$ passando da un oggetto o soggetto comune, come descritto in \ref{PassantC}).
-
-La distanza è calcolata in base ai pesi di ogni arco presente sul \emph{FilmGraph}.
+\label{PassantDW}
+La distanza diretta pesata, realizzata da noi, è una variazione della distanza diretta descritta in \ref{PassantD} che, invece che contare il numero di archi, somma i pesi di ciascun arco.
 
 In maniera formale: 
 
-\begin{eqnarray*}
-ED_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge t(a) = f_b \} \\
-EIO_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge s(b) = f_b \wedge t(a) = t(b) \}  \\
-EII_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge s(b) = f_b \wedge t(a) = t(b) \}  \\
-\end{eqnarray*}
+\begin{equation}
+P_{dw}(f_a,f_b) = \sum\limits_{e \in ED}^{}{w(e)}
+\end{equation}
 
-\begin{eqnarray}
-N_{d}(f_a,f_b) = \sum\limits_{e \in A}^{}{w(e)} \\
-N_{io}(f_a,f_b) = \sum\limits_{e \in B}^{}{w(e)} \\
-N_{ii}(f_a,f_b) = \sum\limits_{e \in C}^{}{w(e)} \\ 
-\end{eqnarray}
-
+con~~$ \qquad ED_{f_a,f_b} = \left\{ e \in Edges \quad\big\vert\quad f_a \xrightarrow{~e~} f_b \right\}$\footnote{Ricordando che nel nostro caso, trattandosi di un multigrafo, possono esserci più archi a collegare $f_a$ e $f_b$}
 
 \subsubsection{Passant Combinated Weighted}
+La distanza combinata pesata utilizza la precedente diretta pesata
+\ref{PassantDW} insieme con la distanza che prende in considerazione i percorsi che uniscono due film attraverso un film in comune.
 
-\lipsum
+La distanza combinata, quindi, prende in considerazione sia gli archi diretti che gli archi indiretti (quelli che uniscono i film $a$ e $b$ passando da un film $c$ comune, come descritto in \ref{PassantC}). In questo caso, tuttavia, tutti gli archi sono pesati e la distanza corrisponde ad una sommatoria di pesi. In maniera formale, dati
+$$EIO_{f_a,f_b} = \left\{ (e_1, e_2) \in Edges \quad\big\vert\quad f_a \xrightarrow{e_1} f_c \wedge f_b \xrightarrow{e_2} f_c \wedge label(e_1)=label(e_2) \right\}$$
+$$EII_{f_a,f_b} = \left\{ p \in Paths \quad\big\vert\quad f_a \xrightarrow{e} f_c \wedge f_b \xrightarrow{e} f_c \right\}$$
+
+\begin{equation}
+CW_{io}(f_a,f_b) = \sum\limits_{(e_1,e_2) \in EIO_{f_a,f_b}^{}}^{}{w(e_1)*w(e_2)}
+\end{equation}
+\begin{equation}
+CW_{ii}(f_a,f_b) = \sum\limits_{(e_1,e_2) \in EII_{f_a,f_b}^{}}^{}{w(e_1)*w(e_2)}
+\end{equation}
 
 
+\begin{equation}
+P_{cw}(f_a,f_b) = \sum\limits_{(e_1,e_2) \in EII_{f_a,f_b}^{}}^{}{w(e_1)*w(e_2)}
+\end{equation}
 
 \subsection{Profili}
 
