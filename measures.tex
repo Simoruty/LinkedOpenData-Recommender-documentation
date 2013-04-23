@@ -3,11 +3,11 @@
 \subsection{Distanze}
 
 Il nostro recommender system è stato testato su quattro diverse misure di distanza.
-Le prime tre sono descritte in \citet{passant2010measuring}, la quarta è stata realizzata \emph{ex novo}.
-
+Le prime due sono descritte in \citet{passant2010measuring}, le altre due è stata realizzata \emph{ex novo} e rappresentano una nuova visione pesata delle precedenti.
 
 
 \subsubsection{Passant Direct}
+\label{PassantD}
 La distanza diretta. Indica il numero di archi diretti che collegano i film $a$ e $b$. Tenendo conto che il grafo preso in considerazione è orientato, vanno presi gli archi in entrambe le direzioni.
 
 In maniera formale, definita $$C_{d}(f_a,f_b) = \left\vert \left\{ e \in Edges \  | \  (f_a \xrightarrow{~e~} f_b ) \right\} \right\vert$$ la formula della distanza completa sarà quindi:
@@ -26,11 +26,14 @@ In maniera formale, definita $$C_{d}(f_a,f_b) = \left\vert \left\{ e \in Edges \
         P_{d}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})}
     \end{equation}
 
+\subsubsection{Passant Combinated}
+\label{PassantC}
 
+La distanza combinata compone la precedente distanza diretta con una misura che
+prende in considerazione gli archi che collegano due film  secondo la formula:
 
-\subsubsection{Passant Indirect}
-\label{PassantI}
-Indica la distanza indiretta trai film presi in esame; il valore restituito sta ad indicare il numero di archi che mettono in relazione i due film passanti attraverso dei film in comune.
+Indica la distanza indiretta trai film presi in esame; il valore restituito sta
+ad indicare il numero di archi che mettono in relazione i due film passanti attraverso dei film in comune.
 
 Formalmente, definiti:
 $$C_{io}(f_a,f_b) = \left\vert \left\{ o \  | \  (f_a \xrightarrow{~e~} o ) \wedge (f_b \xrightarrow{~e~} o) \right\} \right\vert$$
@@ -43,18 +46,35 @@ la formula indiretta di Passant è:
     \end{equation}
 
 
-\subsubsection{Passant Combinated}
-Una distanza che combina le due distanze precedenti secondo la formula:
 
     \begin{equation}
 P_{c}(f_{a},f_{b}) = \frac{1} {1+C_{d}(f_{a},f_{b})+C_{d}(f_{b},f_{a})+C_{io}(f_{a},f_{b})+C_{ii}(f_{a},f_{b})}
     \end{equation}
 
 
-\subsubsection{Nostra}
-La nostra distanza conta sia gli archi diretti che gli archi indiretti (come descritto in \ref{PassantI} che uniscono i film $a$ e $b$, si , cioè quelli che legano a e b ad un oggetto o soggetto comune.
-Un link è un collegamento diretto tra due film con un suo peso dato dalla produttoria dei pesi degli archi precedentemente trovati.
-La distanza coincide con la sommatoria del peso di ogni link.
+\subsubsection{Passant Direct Weighted}
+La nostra distanza prende in considerazione sia gli archi diretti che gli archi indiretti (quelli che uniscono i film $a$ e $b$ passando da un oggetto o soggetto comune, come descritto in \ref{PassantC}).
+
+La distanza è calcolata in base ai pesi di ogni arco presente sul \emph{FilmGraph}.
+
+In maniera formale: 
+
+\begin{eqnarray*}
+ED_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge t(a) = f_b \} \\
+EIO_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge s(b) = f_b \wedge t(a) = t(b) \}  \\
+EII_{f_a,f_b} = & \{ e \in Edges \ \quad | \, & \  s(a) = f_a \wedge s(b) = f_b \wedge t(a) = t(b) \}  \\
+\end{eqnarray*}
+
+\begin{eqnarray}
+N_{d}(f_a,f_b) = \sum\limits_{e \in A}^{}{w(e)} \\
+N_{io}(f_a,f_b) = \sum\limits_{e \in B}^{}{w(e)} \\
+N_{ii}(f_a,f_b) = \sum\limits_{e \in C}^{}{w(e)} \\ 
+\end{eqnarray}
+
+
+\subsubsection{Passant Combinated Weighted}
+
+\lipsum
 
 
 
