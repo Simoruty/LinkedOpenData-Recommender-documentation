@@ -1,32 +1,50 @@
 \section{Sperimentazione}
 \label{experiment}
-
-
+\lipsum[0-1]
 \subsection{Metriche}
 \label{metriche}
+
+Al fine di valutare la bontà del sistema creato abbiamo calcolato due tipologie di metriche:
 \begin{itemize}
 \item Precision
 \item MRR
 \end{itemize}
+Per entrambe le tipologie sono stati presi in esame due punti di vista differenti (\emph{macroscopico} e \emph{microscopico}) ed inoltre, per ogni punto di vista, si è lavorato su due versioni differenti dello stesso dataset (\emph{epurato} e \emph{non epurato}).
+
 \subsubsection{Precision}
-\textbf{la precisione è definita come il numero di documenti attinenti recuperati da una ricerca diviso il numero totale di documenti recuperati dalla stessa ricerca,
-la precisione è la frazione di documenti attinenti che sono stati trovati
-In un processo di classificazione statistica, la precisione per una classe è il numero di veri positivi (il numero di oggetti etichettati correttamente come appartenenti alla classe) diviso il numero totale di elementi etichettati come appartenenti alla classe (la somma di veri positivi e falsi positivi, che sono oggetti etichettati erroneamente come appartenenti alla classe).
-In un processo di classificazione, i termini vero positivo, vero negativo, falso positivo e falso negativo sono usati per confrontare la classificazione di un oggetto (l’etichetta di classe assegnata all’oggetto da un classificatore) con la corretta classificazione desiderata (la classe a cui in realtà appartiene l’oggetto).}
-$$
-Precision =\frac{T_P}{T_P+F_P}
-$$
-In particolare, nella fase sperimentale del progetto sono state calcolate 4 tipologie di precisioni:
-\begin{itemize}
-\item microprecision
-\item microprecision epurata
-\item macroprecision
-\item macroprecision epurata
-\end{itemize}
-Le versioni epurate delle precisioni calcolate vanno
+In un processo di classificazione statistica, la \emph{precisione} per una classe è il numero di \emph{true positive} (il numero di oggetti etichettati correttamente come appartenenti alla classe) diviso il numero totale di elementi etichettati come appartenenti alla classe (la somma di \emph{true positive} e \emph{false positive}, che sono oggetti etichettati erroneamente come appartenenti alla classe).
+Inoltre i termini true positive, true negative, false positive e false negative sono usati per confrontare la classificazione di un oggetto (l’etichetta di classe assegnata all’oggetto da un classificatore) con la corretta classificazione desiderata (la classe a cui in realtà appartiene l’oggetto).
+\begin{equation*}
+Precision =\frac{TP}{TP+FP}
+\end{equation*}
+
+\paragraph{MicroPrecision}
+Nel calcolo della microprecisione, è necessario prendere in considerazione i singoli valori di true positive e di false positive di ogni singolo utente come descritto nella formula:
+\begin{equation*}
+MicroPrecision =\frac{\sum\limits_{u\in U}^{}TP_u}{\sum\limits_{u\in U}^{}TP_u+\sum\limits_{u\in U}^{}FP_u}
+\end{equation*}
+
+\paragraph{MacroPrecision}
+Per quanto riguarda invece il calcolo della macroprecisione, si va a prendere in considerazione il valor medio delle singole precisioni definite a livello di utente. Formalmente può essere descritto secondo la formula:
+\begin{equation*}
+MacroPrecision =\frac{1}{|U|}\sum\limits_{u\in U}{Precision_u}
+\end{equation*}
+
 \subsubsection{MRR}
 Il Mean Reciprocal Rank (MRR) è un indice statistico per valutare un processo che produce una lista di possibili risposte ad una interrogazione (query), ordinate per probabilità di correttezza.
-\begin{equation}
+\begin{equation*}
 MRR = \frac{1}{|Q|}\sum_{i=1}^{Q}{\frac{1}{Rank_i}}
-\end{equation}
+\end{equation*}
+
+\paragraph{MicroMRR}
+Nel calcolo della microMRR, è necessario prendere in considerazione i singoli ranking delle raccomandazioni fatte ad ogni utente come descritto nella formula:
+\begin{equation*}
+MicroMRR =\frac{\sum\limits_{i=1}^{|R|}{\frac{relevant(r_i)}{i}}}{\sum\limits_{i=1}^{|R|}{\frac{1}{i}}} \qquad relevant(r_i)=\begin{cases} 1 & \mbox{se }r_i\mbox{ è rilevante} \\ 0 & \mbox{altrimenti}
+\end{cases}
+\end{equation*}
+\paragraph{MacroMRR}
+Per quanto riguarda invece il calcolo della macroMRR, si va a prendere in considerazione il valor medio dei singoli MRR definiti a livello di utente. Formalmente può essere descritto secondo la formula:
+\begin{equation*}
+MacroMRR =\frac{1}{|U|}\sum_{u\in U}{MRR_u}
+\end{equation*}
 
