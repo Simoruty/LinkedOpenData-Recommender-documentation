@@ -26,6 +26,7 @@
 *.pdfsync
 *.ps
 *.snm
+*.synctex
 *.synctex.gz
 *.tdo
 *.toc
@@ -34,4 +35,3 @@
 *.pdf
 *.bak
 *.ini
-
