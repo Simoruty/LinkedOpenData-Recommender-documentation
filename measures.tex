@@ -65,7 +65,7 @@ ED_{f_a,f_b} = \left\{ e \in Edges \quad\big\vert\quad f_a \xrightarrow{~e~} f_b
 \end{equation*}
 
 \begin{equation*}
-CW_{d}(f_a,f_b) = \sum\limits_{e \in ED}^{}{weight(e)}
+CW_{d}(f_a,f_b) = \sum_{e \in ED}^{}{weight(e)}
 \end{equation*}
 
 \begin{equation}
@@ -85,8 +85,8 @@ E''_{f_a,f_b} = & \left\{ (e_1, e_2) \in Edges ~ \big\vert ~ (f_c \xrightarrow{e
 \end{eqnarray*}
 
 \begin{eqnarray*}
-CW_{io}(f_a,f_b) = \sum\limits_{(e_1,e_2) \in E'_{f_a,f_b}}{weight(e_1)*weight(e_2)}\\
-CW_{ii}(f_a,f_b) = \sum\limits_{(e_1,e_2) \in E''_{f_a,f_b}}{weight(e_1)*weight(e_2)}
+CW_{io}(f_a,f_b) = \sum_{(e_1,e_2) \in E'_{f_a,f_b}}{weight(e_1)*weight(e_2)}\\
+CW_{ii}(f_a,f_b) = \sum_{(e_1,e_2) \in E''_{f_a,f_b}}{weight(e_1)*weight(e_2)}
 \end{eqnarray*}
 
 \begin{equation*}
@@ -99,29 +99,15 @@ P_{cw}(f_{a},f_{b}) = \frac{1} {1+CW_{d}(f_a,f_b)+CW_{d}(f_b,f_a)+CW_{io}(f_a,f_
 Ogni utente deve essere profilato per poter registrare i suoi interessi,
 affinché gli si possano raccomandare nuovi film corretti.
 Per fare questo abbiamo sviluppato due tipi di rappresentazione dell'utente.
-Il primo, più semplice, è il \emph{profilo non pesato}. In esso rappresentiamo i film visti in due insiemi intende un profilo costruito sulla base dei soli film votati positivamente estratti dal training set e tenendo in considerazione i film votati negativamente al solo fine di escluderli dalla futura raccomandazione.
 
-Per \emph{profilo pesato} si intende un profilo costruito sulla base dell'intera totalità dei film visionati e votati dall'utente; Per quanto riguarda la fase di pesatura, i voti verranno normalizzati in un intervallo [-2;2] in modo tale da considerare il voto neutro dato ad un film (3) come ininfluente ai fini della raccomandazione; Formalmente questa normalizzazione viene attuata attraverso la formula:
+Il primo, più semplice, è il \emph{profilo non pesato}. In esso rappresentiamo i film visti in due insiemi, positivi e negativi. Il primo insieme viene utilizzato per migliorare le raccomandazioni mentre il secondo solo per tenere traccia dei film già visti e non raccomandarli nuovamente.
+
+Il secondo è il \emph{profilo pesato}. In esso si tiene traccia di tutti i film
+visti e del loro voto, in modo da pesare la loro influenza sul calcolo della
+distanza. I film valutati positivamente influiranno avvicinando le potenziali raccomandazioni al profilo, tanto più quanto maggiore sarà il voto ricevuto. I film valutati negativamente, invece, aumenteranno la distanza.
+Il peso dato a ciascun film del profilo sarà quindi pesato in relazione al voto ricevuto secondo la formula:
 $$
-P_{NORM}(f_a) = P(f_a)- Voto_M
+P_{NORM}(f_a) = Voto(f_a)- Voto_M
 $$
 
-\subsubsection{Simple}
-Il profilo coincide con l'insieme dei film valutati positivamente (4 e 5 considerati in egual misura)
-
-\subsubsection{Simple Negative}
-
-I film valutati 4 e 5 sono nell'insieme dei positivi. I film valutati 1 e 2 sono nell'insieme dei negativi.
-
-
-\subsubsection{Voted Nostra}
-
-
-Il profilo è l'insieme dei film visti, pesati secondo la formula:
-votazioni dei film visti - voto medio dei film.
-
-\subsubsection{Voted Musto}
-
-Il profilo è l'insieme dei film visti, pesati secondo la formula:
-Voto massimo + 1 - voto del film visto.
-
+In una scala di $n$ valori, essi verranno traslati nell'intervallo $\left[-\frac{n}{2};\frac{n}{2}\right]$
