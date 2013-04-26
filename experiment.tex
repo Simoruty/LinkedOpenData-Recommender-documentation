@@ -9,9 +9,31 @@ Il protocollo sperimentale utilizzato nel progetto, prevede i seguenti passi:
         \item Si creano i due profili utente (pesato e non pesato) utilizzando solo i dati presenti nel suo Training set;
         \item Si creano le liste di raccomandazioni, contenente la totalità dei film, ordinate per importanza, secondo le diverse tipologie di distanza definite nel capitolo \ref{measures};
     \end{enumerate}
-\item $\forall k \in (5,10,20,50,100)$ , calcolo della Precisione $P_k$ (\ref{precision}), e del valore MRR (\ref{MRR});
+\item $\forall k \in (5,10,20,50,100)$ , calcolo della Precisione $P_k$ (\ref{precision}), e del valore MRR (\ref{MRR}) tenendo conto anche delle diverse distanze calcolate e dei diversi profili costruiti in precedenza;
 \end{enumerate}
-
+Formalmente, possiamo dire che, l'esperimento controllato che verrà eseguito sarà un esperimento avente $n$ fattori con $m$ livelli, in particolare avremo 3 fattori:
+\begin{itemize}
+\item \textbf{Distanza} con 4 livelli: 
+    \begin{itemize}
+        \item \emph{Passant D} (\ref{PassantD}),
+        \item \emph{Passant C} (\ref{PassantC}),
+        \item \emph{Passant DW} (\ref{PassantDW}),
+        \item \emph{Passant CW} (\ref{PassantCW});
+    \end{itemize}
+\item \textbf{Profilo} con 2 livelli: 
+    \begin{itemize}
+        \item \emph{Pesato},
+        \item \emph{Non Pesato};    
+    \end{itemize}
+\item \textbf{Numero di raccomandazioni $k$} con 5 livelli:
+    \begin{itemize}
+        \item \emph{5},
+        \item \emph{10},
+        \item \emph{20},
+        \item \emph{50},
+        \item \emph{100}.
+    \end{itemize}
+\end{itemize}
 \subsection{Metriche}
 \label{metriche}
 Al fine di valutare la bontà del sistema creato abbiamo calcolato due tipologie di metriche:

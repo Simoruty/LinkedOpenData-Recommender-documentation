@@ -100,9 +100,9 @@ P_{cw}(f_{a},f_{b}) = \frac{1} {1+CW_{d}(f_a,f_b)+CW_{d}(f_b,f_a)+CW_{io}(f_a,f_
 Ogni utente deve essere profilato per poter registrare i suoi interessi,
 affinché gli si possano raccomandare nuovi film corretti.
 Per fare questo abbiamo sviluppato due tipi di rappresentazione dell'utente.
-
+\label{nonpesato}
 Il primo, più semplice, è il \emph{profilo non pesato}. In esso rappresentiamo i film visti in due insiemi, positivi e negativi. Il primo insieme viene utilizzato per migliorare le raccomandazioni mentre il secondo solo per tenere traccia dei film già visti e non raccomandarli nuovamente.
-
+\label{pesato}
 Il secondo è il \emph{profilo pesato}. In esso si tiene traccia di tutti i film
 visti e del loro voto, in modo da pesare la loro influenza sul calcolo della
 distanza. I film valutati positivamente influiranno avvicinando le potenziali raccomandazioni al profilo, tanto più quanto maggiore sarà il voto ricevuto. I film valutati negativamente, invece, aumenteranno la distanza.
