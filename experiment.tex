@@ -9,7 +9,7 @@ Il protocollo sperimentale utilizzato nel progetto, prevede i seguenti passi:
         \item Si creano i due profili utente (pesato e non pesato) utilizzando solo i dati presenti nel suo Training set;
         \item Si creano le liste di raccomandazioni, contenente la totalità dei film, ordinate per importanza, secondo le diverse tipologie di distanza definite nel capitolo \ref{measures};
     \end{enumerate}
-\item Calcolo delle due metriche definite nel paragrafo \ref{metriche}
+\item $\forall k \in (5,10,20,50,100)$ , calcolo della Precisione $P_k$ (\ref{precision}), e del valore MRR (\ref{MRR});
 \end{enumerate}
 
 \subsection{Metriche}
@@ -22,6 +22,7 @@ Al fine di valutare la bontà del sistema creato abbiamo calcolato due tipologie
 Per entrambe le tipologie sono stati presi in esame due punti di vista differenti (\emph{macroscopico} e \emph{microscopico}) ed inoltre, per ogni punto di vista, si è lavorato su due versioni differenti dello stesso dataset (\emph{epurato} e \emph{non epurato}). Questo è stato necessario al fine di migliorare le metriche relative alle raccomandazioni in quanto, nella valutazione, si vanno a considerare solo ed esclusivamente film presenti nel test set (\emph{epurato}) e non nell'intera totalità dei film presenti, di cui nella maggior parte dei casi (film non presenti nel test set) non conosciamo l'opinione dell'utente su quel particolare film (\emph{non epurato}).
 
 \subsubsection{Precision}
+\label{precision}
 In un processo di classificazione statistica, la \emph{precisione} per una classe è il numero di \emph{true positive} (il numero di oggetti etichettati correttamente come appartenenti alla classe) diviso il numero totale di elementi etichettati come appartenenti alla classe (la somma di \emph{true positive} e \emph{false positive}, che sono oggetti etichettati erroneamente come appartenenti alla classe).
 Inoltre i termini true positive, true negative, false positive e false negative sono usati per confrontare la classificazione di un oggetto (l’etichetta di classe assegnata all’oggetto da un classificatore) con la corretta classificazione desiderata (la classe a cui in realtà appartiene l’oggetto).
 \begin{equation*}
@@ -41,6 +42,7 @@ MacroPrecision =\frac{1}{|U|}\sum\limits_{u\in U}{Precision_u}
 \end{equation*}
 
 \subsubsection{MRR}
+\label{MRR}
 Il Mean Reciprocal Rank (MRR) è un indice statistico per valutare un processo che produce una lista di possibili risposte ad una interrogazione (query), ordinate per probabilità di correttezza.
 \begin{equation*}
 MRR = \frac{1}{|Q|}\sum_{i=1}^{Q}{\frac{1}{Rank_i}}
