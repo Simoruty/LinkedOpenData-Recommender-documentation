@@ -3,7 +3,6 @@
 
 La sperimentazione è stata condotta utilizzando il dataset MovieLens, già noto in letteratura.
 Il dataset è composto da 518 film e 613 utenti. Ciascun utente ha votato più film, con una votazione che va da 1 a 5.
-
 Il protocollo sperimentale utilizzato nel progetto, prevede i seguenti passi:
 \begin{enumerate}
 \item Split del set di ogni utente secondo la proporzione 70/30 (il 70\% del set verrà utilizzato come Training Set, il restante 30\% come Test Set);
@@ -16,17 +15,17 @@ Il protocollo sperimentale utilizzato nel progetto, prevede i seguenti passi:
 \end{enumerate}
 Formalmente, possiamo dire che, l'esperimento controllato che verrà eseguito sarà un esperimento avente $n$ fattori con $m$ livelli, in particolare avremo 3 fattori:
 \begin{itemize}
-\item \textbf{Distanza} con 4 livelli: 
+\item \textbf{Distanza} con 4 livelli:
     \begin{itemize}
         \item \emph{Passant D} (\ref{PassantD}),
         \item \emph{Passant C} (\ref{PassantC}),
         \item \emph{Passant DW} (\ref{PassantDW}),
         \item \emph{Passant CW} (\ref{PassantCW});
     \end{itemize}
-\item \textbf{Profilo} con 2 livelli (\ref{profili}) : 
+\item \textbf{Profilo} con 2 livelli (\ref{profili}) :
     \begin{itemize}
         \item \emph{Pesato},
-        \item \emph{Non Pesato};    
+        \item \emph{Non Pesato};
     \end{itemize}
 \item \textbf{Numero di raccomandazioni $k$} con 5 livelli:
     \begin{itemize}
