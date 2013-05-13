@@ -9,17 +9,17 @@ La configurazione A, è stata ottenuta attraverso una valutazione euristica dell
 \small
 \centering
 \begin{tabular}{l c}
-Properties & Valore \\\hline
-editing & 0.4 \\
-music & 0.1 \\
-cinematography & 0.2 \\
-director & 0.8 \\
-distributor & 0.2 \\
-producer & 0.1 \\
-starring & 0.7 \\
-studio & 0.1 \\
-writer & 0.4 \\
-subject & 0.5 \\
+\textit{Properties} & \textit{Value} \\\hline
+editing & 0.40 \\
+music & 0.10 \\
+cinematography & 0.20 \\
+director & 0.80 \\
+distributor & 0.20 \\
+producer & 0.10 \\
+starring & 0.70 \\
+studio & 0.10 \\
+writer & 0.40 \\
+subject & 0.50 \\
 \end{tabular}
 \end{table}
 Sperimentando questa configurazione, si sono ottenuti i seguenti risultati : 
@@ -222,17 +222,17 @@ Testando altri possibili valori da attribuire alle singole proprietà, si sono o
 	\small
 	\centering
 	\begin{tabular}{l c}
-		Proprietà & Valore \\\hline
-		editing & 0.2 \\
-		music & 0.1 \\
-		cinematography & 0.1 \\
-		director & 0.7 \\
-		distributor & 0.1 \\
-		producer & 0.1 \\
-		starring & 0.6 \\
-		studio & 0.1 \\
-		writer & 0.3 \\
-		subject & 0.8 \\
+		\textit{Properties} & \textit{Value} \\\hline
+		editing & 0.20 \\
+		music & 0.10 \\
+		cinematography & 0.10 \\
+		director & 0.70 \\
+		distributor & 0.10 \\
+		producer & 0.10 \\
+		starring & 0.60 \\
+		studio & 0.10 \\
+		writer & 0.30 \\
+		subject & 0.80 \\
 	\end{tabular}
 \end{table}
 
@@ -434,16 +434,16 @@ La terza configurazione presa in esame, sarà settata in modo tale da prendere i
 	\small
 	\centering
 	\begin{tabular}{l c}
-		Proprietà & Valore \\\hline
-		editing & 0 \\
+		\textit{Properties} & \textit{Value} \\\hline
+		editing & 0.00 \\
 		music & 0.31 \\
-		cinematography & 0\\
+		cinematography & 0.00\\
 		director & 0.83\\
-		distributor & 0\\
-		producer & 0 \\
+		distributor & 0.00\\
+		producer & 0.00 \\
 		starring & 0.50\\
-		studio & 0\\
-		writer & 0\\
+		studio & 0.00\\
+		writer & 0.00\\
 		subject & 0.23\\
 	\end{tabular}
 \end{table}
@@ -640,7 +640,7 @@ Come nei due casi precedenti, verranno analizzati sia la microprecision che la m
 	\includegraphics[width=.9\textwidth]{./images/graphs/micro_precT_Best}
 \end{figure}
 
-Come si evince da questi grafici, anche in questo caso, i risultati migliori sono quelli espressi sempre dalla distanza pesata e diretta di passant in entrambe le versioni di profilazioni; Inoltre, con questo tipo di configurazione, i risultati sembrano prediligere questo tipo di configurazione rispetto alle precedenti aumentando il livello di precisione delle raccomandazioni fatte; Ecco un grafico che mette a confronto i risultati migliori ottenuti dalle tre configurazioni:
+Come si evince da questi grafici, anche in questo caso, i risultati migliori sono quelli espressi sempre dalla distanza diretta e pesata di passant in entrambe le versioni di profilazione; Inoltre, con questo tipo di configurazione, i risultati sembrano prediligere questo tipo di configurazione rispetto alle precedenti aumentando il livello di precisione delle raccomandazioni fatte; Ecco un grafico che mette a confronto i risultati migliori ottenuti dalle tre configurazioni:
 
 \definecolor{gold}{RGB}{255, 215, 0}
 \definecolor{silver}{RGB}{192,192,192}
@@ -654,14 +654,14 @@ Come si evince da questi grafici, anche in questo caso, i risultati migliori son
 	ymax=16,
 	ylabel=\%,
 	xlabel= $k$,
-	/pgfplots/xtick={0,5,10,20,50,100}, 
+	/pgfplots/xtick={5,10,20,50,100}, 
 	legend style={
 		%font=\tiny,
 		%pos=outer north east,
 		%line width=.1pt,
 		%mark size=.6pt
 	},
-	width=\textwidth,
+	width=.9\textwidth,
 	height=.8\textwidth,
 	grid=both, 
 	axis background/.style={fill=white}]
