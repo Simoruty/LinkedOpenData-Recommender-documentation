@@ -4,6 +4,7 @@
 \usepackage[round,numbers]{natbib}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage[scaled=0.9]{beramono}
@@ -13,6 +14,7 @@
 \usepackage{float}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{booktabs}
 
 \usepackage[italian]{babel}
 \usepackage{caption}
@@ -83,13 +85,37 @@
 
 \lstset{language=xmlnostro}
 
+\usepackage[nowrite,infront,standard,swapnames]{frontespizio}
+\nofiles 
+\fontoptionnormal 
+\Universita {Bari}
+\Logo [1.5cm]{./images/logo}
+\Facolta {Scienze Matematiche, Fisiche e Naturali}
+\Corso [Laurea]{Informatica Magistrale}
+\Titoletto {Accesso Intelligente all'Informazione ed \\ Elaborazione del Linguaggio Naturale}
+\Titolo {Linked Open Data for content-based recommender systems}
+\NCandidato{Studenti}
+\Candidato{Simone Rutigliano\\Luciano Quercia}
+\Annoaccademico {2012-2013}
+
 \begin{document}
-
-\maketitle	
-
+	\begin{frontespizio}
+	\preparefrontpagestandard
+	\end{frontespizio}
+%\maketitle
 \tableofcontents
+
+\begingroup
+\renewcommand\numberline[1]{}
 \listoffigures
+\endgroup
+
+\begingroup
+\renewcommand\numberline[1]{}
 \listoftables
+\endgroup
+
+\newpage
 
 \input{introduction}
 \input{relatedworks}
