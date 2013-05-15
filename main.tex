@@ -99,32 +99,31 @@
 \Annoaccademico {2012-2013}
 
 \begin{document}
-	\begin{frontespizio}
-	\preparefrontpagestandard
-	\end{frontespizio}
-%\maketitle
-\tableofcontents
+	\preparefrontpagestandard	%Frontespizio
 
-\begingroup
-\renewcommand\numberline[1]{}
-\listoffigures
-\endgroup
-
-\begingroup
-\renewcommand\numberline[1]{}
-\listoftables
-\endgroup
-
-\newpage
-
-\input{introduction}
-\input{relatedworks}
-\input{project}
-\input{measures}
-\input{experiment}
-\input{results}
-
-\bibliographystyle{abbrvnat}
-\bibliography{mybib}
+	%\maketitle
+	\tableofcontents
+	
+	\begingroup
+	\renewcommand\numberline[1]{}
+	\listoffigures
+	\endgroup
+	
+	\begingroup
+	\renewcommand\numberline[1]{}
+	\listoftables
+	\endgroup
+	
+	\newpage
+	
+	\input{introduction}
+	\input{relatedworks}
+	\input{project}
+	\input{measures}
+	\input{experiment}
+	\input{results}
+	
+	\bibliographystyle{abbrvnat}
+	\bibliography{mybib}
 
 \end{document}
