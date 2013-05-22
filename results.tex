@@ -1157,7 +1157,7 @@ Analizzando i risultati ottenuti, si evince che la qualità predominante è \emp
 	\small
 	\centering
 	\begin{tabular}{l c}
-		\textit{Properties} & \textit{Value}\\\hline
+		\textit{~~~~Properties} & \textit{Value}\\\hline
 		director & 0,11125611745513900 \\
 		subject & 0,10636215334420900 \\
 		cinematography & 0.07471451876019580 \\
@@ -1169,7 +1169,7 @@ Analizzando i risultati ottenuti, si evince che la qualità predominante è \emp
 		editing	& 0.04959216965742251 \\
 		distributor & 0.04632952691680261 \\
 	\end{tabular}
-	\caption{Riepilogo configurazioni singole proprietà}
+	\caption{\emph{Riepilogo configurazioni singole proprietà}}
 \end{table}
 Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline è stato $0,113539967373573$, le diverse proprietà prese singolarmente non riescono a superare la baseline, di conseguenza è stato necessario combinare le diverse proprietà in modo tale da ottenere dei risultati che superino la baseline in questione.
 
@@ -1180,7 +1180,7 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 	xmin=5,
 	xmax=50,
 	ymin=4,
-	ymax=14,
+	ymax=12,
 	ylabel=$\mu\;precision (\%)$,
 	xlabel= $k$,
 	minor grid style={gray!30},
@@ -1205,7 +1205,7 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,7.66)
 		(50,6.24)	
 	};
-	\addlegendentry{\scalefont{0.5}{Director}}
+	\addlegendentry{Director}
 	
 	\addplot[color=silver,thick] coordinates {
 		(5,10.64)
@@ -1213,7 +1213,7 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,7.22)
 		(50,5.80)
 	};
-	\addlegendentry{\scalefont{0.5}{Subject}}
+	\addlegendentry{Subject}
 	
 	\addplot[color=bronze,thick] coordinates {
 		(5,7.47)
@@ -1221,15 +1221,15 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,5.84)
 		(50,4.90)
 	};
-	\addlegendentry{\scalefont{0.5}{Cinematography}}
+	\addlegendentry{Cinematography}
 	
-	\addplot[color=black,thick] coordinates {
+	\addplot[color=red,thick] coordinates {
 		(5,7.15)
 		(10,6.41)
 		(20,5.73)
 		(50,4.73)
 	};
-	\addlegendentry{\scalefont{0.5}{Starring}}
+	\addlegendentry{Starring}
 	
 	\addplot[color=green,thick] coordinates {
 		(5,6.56)
@@ -1237,7 +1237,7 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,5.51)
 		(50,5.38)
 	};
-	\addlegendentry{\scalefont{0.5}{Writer}}
+	\addlegendentry{Writer}
 	
 	\addplot[color=orange,thick] coordinates {
 		(5,6.82)
@@ -1245,15 +1245,15 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,5.47)
 		(50,4.74)
 	};
-	\addlegendentry{\scalefont{0.5}{Music}}
+	\addlegendentry{Music}
 	
-	\addplot[color=brown,thick] coordinates {
+	\addplot[color=teal,thick] coordinates {
 		(5,6.59)
 		(10,5.74)
 		(20,5.29)
 		(50,4.97)
 	};
-	\addlegendentry{\scalefont{0.5}{Producer}}
+	\addlegendentry{Producer}
 	
 	\addplot[color=magenta,thick] coordinates {
 		(5,5.81)
@@ -1261,22 +1261,28 @@ Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline �
 		(20,4.20)
 		(50,4.06)
 	};
-	\addlegendentry{\scalefont{0.5}{Studio}}
+	\addlegendentry{Studio}
 		
-	\addplot[color=yellow,thick] coordinates {
+	\addplot[color=blue,thick] coordinates {
 		(5,4.63)
 		(10,5.29)
 		(20,5.03)
 		(50,3.93)
 	};
-	\addlegendentry{\scalefont{0.5}{Distributor}}
+	\addlegendentry{Distributor}
+	
+	\addplot[color=black,very thick] coordinates {
+		(5,11.35)
+		(10,9.15)
+		(20,7.35)
+		(50,5.69)	
+	};
+	\addlegendentry{\color{red}Baseline}
 	\end{axis}
 	\end{tikzpicture}	
-	\caption{\emph{sadasdadadadasdsa}}
-		
+	\caption{\emph{Riepilogo configurazioni singole}}	
 \end{figure}
-
-In particolar modo, tra le più interessanti da analizzare, ce ne sono tre.
+Combinando i valori tra loro, le principali configurazioni ottenute sono le seguenti:
 \subsection{Configurazione A}
 La configurazione A, è stata ottenuta attraverso una valutazione euristica delle varie proprietà, attribuendo dei valori che rispecchiassero il più verosimilmente possibile gli interessi degli utenti riguardo quella particolare proprietà di film.
 \begin{table}[H]
@@ -1719,7 +1725,7 @@ Analizzando anche in questo caso i valori ottenuti nelle due metriche prese in c
 Cosi come accadeva in precedenza, tipologia che permette di ottenere le prestazioni migliori è sempre a distanza diretta e pesata di Passant in entrambe le varianti di profilazione.
 
 \subsection{Configurazione C}
-La terza configurazione presa in esame, sarà settata in modo tale da prendere in considerazione solo le proprietà che si potrebbero reputare importanti ai fini di una ipotetica raccomandazione, annullando tutte quelle proprietà che si reputano inutili e che potrebbero influenzare negativamente la raccomandazione inserendo eventuale rumore nei dati. Di seguito il settaggio e i risultati della raccomandazione:
+Di seguito il settaggio della terza configurazione presa in esame con i relativi risultati della raccomandazione: 
 \begin{table}[H]
 	\small
 	\centering
