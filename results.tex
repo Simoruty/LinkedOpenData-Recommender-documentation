@@ -1152,12 +1152,15 @@ Nella sesta configurazione verrà presa in considerazione solo la proprietà rel
 \end{table}
 
 \subsection{Riepilogo}
-Analizzando i risultati ottenuti, si evince che la qualità predominante è \emph{director}, di conseguenza, nelle configurazioni successive, avrà un valore maggiore rispetto alle altre caratteristiche; Di seguito la classifica riepilogativa delle proprietà in base al risultati ottenuti dalle varie configurazioni testate in precedenza con i relativi valori più alti ottenuti con le varie configurazioni\footnote{In particolare con Distanza diretta pesata di Passant con $k$=5}:
+La nostra scelta di pesare gli archi si basa sull'assunzione che ogni proprietà abbia un'influenza diversa per stabilire la similarità tra film.
+Per verificare tale assunzione abbiamo provato a ottenere delle raccomandazioni utilizzando solo gli archi di un determinato tipo per volta.
+Per farlo abbiamo creato delle configurazioni ad hoc con peso unitario alla proprietà da prendere in considerazione e peso nullo su tutte le altre proprietà.
+Di seguito riportiamo il ranking dei risultati ottenuti.\footnote{In particolare con Distanza diretta pesata di Passant con $k$=5}:
 \begin{table}[H]
 	\small
 	\centering
 	\begin{tabular}{l c}
-		\textit{~~~~Properties} & \textit{Value}\\\hline
+		\textit{~~~~Properties} & \textit{$\mu\;\pi$}\\\hline
 		director & 0,11125611745513900 \\
 		subject & 0,10636215334420900 \\
 		cinematography & 0.07471451876019580 \\
@@ -1171,7 +1174,11 @@ Analizzando i risultati ottenuti, si evince che la qualità predominante è \emp
 	\end{tabular}
 	\caption{\emph{Riepilogo configurazioni singole proprietà}}
 \end{table}
-Considerato che il valore più alto ottenuto tramite l'utilizzo della baseline è stato $0,113539967373573$, le diverse proprietà prese singolarmente non riescono a superare la baseline, di conseguenza è stato necessario combinare le diverse proprietà in modo tale da ottenere dei risultati che superino la baseline in questione.
+I valori ottenuti utilizzando le diverse proprietà, prese singolarmente, non riescono a superare la baseline (tutti gli archi non pesati, $0,113539967373573$).
+Successivamente abbiamo combinato le proprietà più rilevanti per poter ottenere dei risultati migliori.
+
+Analizzando la tabella, si evince che le proprietà che presentano i risultati migliori sono \emph{director} e \emph{subject}.
+Di conseguenza, nelle configurazioni successive, abbiamo provveduto ad attribuire loro dei pesi maggiori e a penalizzare l'influenza di proprietà come \emph{distributor} e \emph{editing} che probabilmente non apportano informazioni utili ai fini della raccomandazione.
 
 \begin{figure}	
 	\begin{tikzpicture}
@@ -1951,61 +1958,66 @@ In particolar modo, per quanto riguarda la microprecision, ecco un grafico riass
 
 \begin{figure}
 \begin{tikzpicture}
-\begin{axis}[
-xmin=0,     
-xmax=110,    
-ymin=4,     
-ymax=16,
-ylabel=$Precision (\%)$,
-xlabel= $k$,
-/pgfplots/xtick={5,10,20,50,100}, 
-legend style={
-	%font=\tiny,
-	%pos=outer north east,
-	%line width=.1pt,
-	%mark size=.6pt
-},
-width=.9\textwidth,
-height=.8\textwidth,
-grid=both, 
-axis background/.style={fill=white}]
-\addplot[color=silver,thick] coordinates {
-	(5,13.54)
-	(10,11.44)
-	(20,9.03)
-	(50,6.73)
-	(100,5.06)
-	
-};
-\addlegendentry{CONFIG A} % conf A = nostra
-
-\addplot[color=bronze,thick] coordinates {
-	(5,12.10)
-	(10,9.98)
-	(20,8.15)
-	(50,6.04)
-	(100,4.85)
-};
-\addlegendentry{CONFIG B} % conf B = musto
-
-\addplot[color=gold,thick] coordinates {
-	(5,14.55)
-	(10,12.51)
-	(20,10.02)
-	(50,7.20)
-	(100,5.31)
-};
-\addlegendentry{CONFIG C} % conf C = max raggiunto
-
-\addplot[color=black,thick] coordinates {
-	(5,11.35)
-	(10,9.15)
-	(20,7.35)
-	(50,5.69)
-	(100,4.66)
-};
-\addlegendentry{BASELINE}
-\end{axis}
+	\begin{axis}[
+		/tikz/font={\scriptsize},
+		xmin=5,
+		xmax=100,
+		ymin=4,
+		ymax=15,
+		ylabel=$Precision (\%)$,
+		xlabel= $k$,
+		minor grid style={gray!30},
+		major grid style={black!50},
+		/pgfplots/xtick={5,10,20,50,100},
+		/pgfplots/ytick={4,...,15},
+		grid=major,
+		extra y ticks={4.1,4.2,...,4.9,5.1,5.2,...,5.9,
+					6.1,6.2,...,6.9,7.1,7.2,...,7.9,8.1,8.2,...,8.9,
+					9.1,9.2,...,9.9,10.1,10.2,...,10.9,11.1,11.2,...,11.9,
+					12.1,12.2,...,12.9,13.1,13.2,...,13.9,14.1,14.2,...,14.9},
+		mark=none,
+		extra y tick style={yticklabels={},grid=minor,tiny,ytick pos=left},
+		width=.9\textwidth,
+		height=.8\textwidth,
+		grid=both, 
+		axis background/.style={fill=white}]
+		\addplot[color=silver,thick] coordinates {
+			(5,13.54)
+			(10,11.44)
+			(20,9.03)
+			(50,6.73)
+			(100,5.06)
+			
+		};
+		\addlegendentry{Config A} % conf A = nostra
+		
+		\addplot[color=bronze,thick] coordinates {
+			(5,12.10)
+			(10,9.98)
+			(20,8.15)
+			(50,6.04)
+			(100,4.85)
+		};
+		\addlegendentry{Config B} % conf B = musto
+		
+		\addplot[color=gold,thick] coordinates {
+			(5,14.55)
+			(10,12.51)
+			(20,10.02)
+			(50,7.20)
+			(100,5.31)
+		};
+		\addlegendentry{Config C} % conf C = max raggiunto
+		
+		\addplot[color=black,thick] coordinates {
+			(5,11.35)
+			(10,9.15)
+			(20,7.35)
+			(50,5.69)
+			(100,4.66)
+		};
+		\addlegendentry{\color{red}Baseline}
+	\end{axis}
 \end{tikzpicture}
 \caption{\emph{Confronto delle migliori precision}}
 \end{figure}
@@ -2024,13 +2036,24 @@ Prendendo in considerazione invece le microprecision epurate, otteniamo i seguen
 \begin{figure}
 	\begin{tikzpicture}
 	\begin{axis}[
-	xmin=0,     
-	xmax=110,    
+	/tikz/font={\scriptsize},
+	xmin=5,     
+	xmax=100,    
 	ymin=56,
-	ymax=70,     
+	ymax=69,     
 	ylabel=$Precision (\%)$,
 	xlabel= $k$,
-	/pgfplots/xtick={5,10,20,50,100}, 
+	minor grid style={gray!20},
+	major grid style={black!40},
+	/pgfplots/xtick={5,10,20,50,100},
+	/pgfplots/ytick={56,...,69},
+	grid=major,
+	extra y ticks={56.1,56.2,...,56.9,57.1,57.2,...,57.9,58.1,58.2,...,58.9,
+					59.1,59.2,...,59.9,60.1,60.2,...,60.9,61.1,61.2,...,61.9,
+					62.1,62.2,...,62.9,63.1,63.2,...,63.9,64.1,64.2,...,64.9,
+					65.1,65.2,...,65.9,66.1,66.2,...,66.9,67.1,67.2,...,67.9},
+	mark=none,
+	extra y tick style={yticklabels={},grid=minor,tiny,ytick pos=left},
 	legend style={
 		%font=\tiny,
 		%pos=outer north east,
@@ -2049,7 +2072,7 @@ Prendendo in considerazione invece le microprecision epurate, otteniamo i seguen
 		(100,56.62)
 		
 	};
-	\addlegendentry{CONFIG A} % conf A = nostra
+	\addlegendentry{Config A} % conf A = nostra
 	
 	\addplot[color=bronze,thick] coordinates {
 		(5,66.49)
@@ -2058,7 +2081,7 @@ Prendendo in considerazione invece le microprecision epurate, otteniamo i seguen
 		(50,56.88)
 		(100,56.62)
 	};
-	\addlegendentry{CONFIG B} % conf B = musto
+	\addlegendentry{Config B} % conf B = musto
 	
 	\addplot[color=gold,thick] coordinates {
 		(5,68.97)
@@ -2067,7 +2090,7 @@ Prendendo in considerazione invece le microprecision epurate, otteniamo i seguen
 		(50,56.94)
 		(100,56.62)
 	};
-	\addlegendentry{CONFIG C} % conf C = max raggiunto
+	\addlegendentry{Config C} % conf C = max raggiunto
 	
 	\addplot[color=black,thick] coordinates {
 		(5,65.29)
@@ -2076,7 +2099,7 @@ Prendendo in considerazione invece le microprecision epurate, otteniamo i seguen
 		(50,56.88)
 		(100,56.62)
 	};
-	\addlegendentry{BASELINE}
+	\addlegendentry{\color{red}Baseline}
 	\end{axis}
 	\end{tikzpicture}
 	\caption{\emph{Confronto delle migliori precision epurate}}
