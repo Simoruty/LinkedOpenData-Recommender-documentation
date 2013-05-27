@@ -25,9 +25,7 @@ Lo stesso package conterrà anche il metodo \emph{update} il quale avrà il comp
 Per quanto riguarda il secondo obiettivo,all'interno della classe \textsc{FilmGraph} sarà presente sempre un metodo \emph{load} il quale scopo è sempre quello di caricare qualora dovesse essere presente il file seriale dell'oggetto FilmGraph al fine di ottimizzare il calcolo computazionale del sistema; qualora non dovesse essere presente, si passa alla fase di creazione del nuovo grafo, in particolare un multigrafo sparso direzionato, partendo dal multigrafo sparso non direzionato creato in precedenza.
 Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film di movielens presenti nel file di configurazione, mentre come archi tutti i possibili percorsi di lunghezza 2 necessari ad arrivare dal film sorgente al film destinatario, ad esempio: Partendo dal grafo delle risorse cosi composto 
 \begin{figure}[H]
-	\begin{tabular}
-	content...
-	\end{tabular}
+	\centering
 	\begin{tikzpicture}
 	[lineDecorate/.style={-,thick},%
 	  actor/.style={shape=circle,inner sep=3pt,draw, thick},
@@ -66,27 +64,64 @@ Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film d
 	};
 	
 	\end{tikzpicture}
-	\begin{tabular}{l l}
-	  \begin{tikzpicture}[film/.style={shape=diamond,inner sep=3pt,draw,thick, fill=blue!15}]
-	    \node (a) at (6,3) [film] {};
-	    \node [right] at (a.west) {\footnotesize};
-	  \end{tikzpicture}
-	  & Film \\
-	
-	 \begin{tikzpicture}[actor/.style={shape=circle,inner sep=3pt,draw, thick}]
-	    \node (a) at (9,3) [actor] {};
-	    \node [right] at (a.west) {\footnotesize};
-	 \end{tikzpicture}
-	 & Resource \\
-	
-	  \color{red}--- & Edge director \\
-	 \color{blue}--- & Edge actor \\
-	\end{tabular}	
 \end{figure}
 
+Si ottiene un nuovo multigrafo sparso e direzionato di questo tipo:
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+	[lineDecorate/.style={-,thick},%
+	  film/.style={shape=diamond,inner sep=4pt,draw,thick, fill=blue!15}]
+	
+	%% nodes or vertices
+	\foreach \nodename/\x/\y/\direction/\navigate in {
+	  $Django Unchained$/0/4/left/west, $Inglourious Basterds$/4/4/right/east, $Titanic$/0/1/below/south}
+	{
+	  \node (\nodename) at (\x,\y) [film] {};
+	  \node [\direction] at (\nodename.\navigate) {\small$\nodename$};
+	}
+	  \node ($actor Di Caprio actor$) at (0,2) {\color{red}\scriptsize{actor Di Caprio actor}};
+	
+	%% edges or lines
+	\path
+	\foreach \startnode/\endnode in {$Django Unchained$/$actor Di Caprio actor$,$actor Di Caprio actor$/$Titanic$}
+	{
+	  (\startnode) edge[lineDecorate,actor edge] node[] {} (\endnode)
+	}
+	
+	\foreach \startnode/\endnode in {$Django Unchained$/$Inglourious Basterds$}
+	{
+	  (\startnode) edge[lineDecorate,bend left,actor edge] node[auto] {\scriptsize{actor Tarantino actor}} (\endnode)
+	}
+	
+	\foreach \startnode/\endnode in {$Inglourious Basterds$/$Django Unchained$}
+	{
+	  (\startnode) edge[lineDecorate,bend left,director edge] node[auto] {\scriptsize{director Tarantino director}} (\endnode)
+	};
+	
+	\end{tikzpicture}
+\end{figure}
 
-
- metodo il cui scopo sarà quello di convertire il multigrafo sparso non direzionato, in un nuovo multigrafo sparso direzionato i cui vertici saranno solo i film presenti nel db di movielens, mentre i cui archi saranno creati relazionando tra loro due archi definiti in precedenza aventi come soggetto della prima proprietà il film di partenza e come oggetto della seconda proprietà il film di destinazione.
+\begin{figure}
+	\centering
+	\begin{tabular}{l l}
+ \begin{tikzpicture}[film/.style={shape=diamond,inner sep=3pt,draw,thick, fill=blue!15}]
+  \node (a) at (6,3) [film] {};
+  \node [right] at (a.west) {\footnotesize};
+ \end{tikzpicture}
+ & \emph{Film} \\
+	
+ \begin{tikzpicture}[actor/.style={shape=circle,inner sep=3pt,draw, thick}]
+  \node (a) at (9,3) [actor] {};
+  \node [right] at (a.west) {\footnotesize};
+ \end{tikzpicture}
+ & \emph{Resource} \\
+	
+ \color{red}--- & \emph{Edge director} \\
+ \color{blue}--- & \emph{Edge actor} \\
+	\end{tabular}	
+	
+\end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{./images/Diagrams/graph.png}
