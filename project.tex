@@ -1,27 +1,92 @@
 \section{Progetto}
 \label{project}
 
-Il progetto è composto da 5 sezioni:
+Il progetto è composto da 5 package:
 \begin{itemize}
 \item\emph{graph}
-\item\emph{distance}
-%\item\emph{movielens\_exp}
+\item\emph{distances}
 \item\emph{profile}
 \item\emph{recommendation}
+\item\emph{movielens\_exp}
 \end{itemize}
 
-\subsection{graph}
+\subsection{Package graph}
 Nella parte iniziale del progetto verranno eseguiti dei metodi presenti nella classi situate all'interno del package \emph{graph}, i cui scopi saranno quelli di:
 \begin{itemize}
-\item Salvare all'interno di un grafo i film presenti nel db di movielens\footnote{\emph{\url{http://www.grouplens.org/node/73}}};
+\item Salvare all'interno di un grafo i film presenti nel db di movielens\footnote{\url{http://www.grouplens.org/node/73}};
 \item A partire dal grafo creato in precedenza, si va a creare un nuovo grafo in cui ogni vertice rappresenta un film, mentre ogni arco rappresenta un possibile collegamento che intercorre tra due film attraverso un qualunque tipo di risorsa quale ad esempio un particolare attore facente parte del casting di entrambi i film presi in considerazione.
 \end{itemize}
+\subsubsection{Graph}
+Al fine di soddisfare il primo obiettivo, il primo metodo che verrà eseguito, sarà il metodo \emph{load}, il quale andrà a caricare da file binario serializzato il grafo da utilizzare all'interno del progetto; in caso contrario, quindi qualora il file non fosse presente, compito del metodo, sarà quello di creare la struttura dati graph che verrà utilizzata all'interno del progetto; per fare ciò, all'interno del metodo \emph{load} sarà presente il metodo \emph{createfromQuery}, il quale per ogni film presente all'interno del file di configurazione\footnote{\emph{ListFilms.txt} contiene ID di movielens, nome e URI di DBpedia di ogni film}, andrà innanzitutto ad inserire tali film come vertici del grafo e successivamente, per ogni proprietà presente anch'essa nel relativo file di configurazione, andrà a recuperare le risorse a cui sono collegate le risorse sorgenti con le varie proprietà; per fare ciò sarà presente il metodo \emph{querySPARQL}, il quale andrà ad eseguire la vera e propria query SPARQL all'endpoint di DBPedia\footnote{\url{http://dbpedia.org/sparql}} usando come soggetto l'URI della risorsa e come proprietà l'URI della proprietà, entrambi passati come parametro alla funzione stessa. Qualora il resultset della query dovesse essere positivo, quindi ci sono dei risultati, verranno creati all'interno del grafo sia i vertici contenenti le risorse ottenute dalla query, sia gli archi che ne permettano il cammino tra le due risorse; inoltre tale arco non sarà uniforme, ma sarà pesato in base al valore di pesatura di quella proprietà presente sempre all'interno del file di configurazione delle proprietà 
+Una volta ottenute tutte queste informazioni e popolato l'intero grafo sia di archi, quindi predicati che mettano in relazione le risorse quale ad esempio director,writer,music composer e cosi via, che di vertici, quindi risorse quali film,attori,case produttrici,registi,ecc; tale grafo verrà serializzato al fine di ottimizzare future esecuzioni del progetto. Il grafo creato in questi passi sarà un tipo di multigrafo sparso e non direzionato.
+Lo stesso package conterrà anche il metodo \emph{update} il quale avrà il compito di aggiornare i pesi dei vari archi senza necessariamente andarlo a ricreare da zero.
 
-Al fine di soddisfare il primo obiettivo, all'interno della classe \textsc{Graph} sarà presente un metodo atto alla creazione del multigrafo sparso non direzionato attraverso l'esecuzione di query SPARQL utilizzando come endpoint il link di Dbpedia (\emph{\footnotesize{\url{http://dbpedia.org/sparql}}}).
+\subsubsection{FilmGraph}
+Per quanto riguarda il secondo obiettivo,all'interno della classe \textsc{FilmGraph} sarà presente sempre un metodo \emph{load} il quale scopo è sempre quello di caricare qualora dovesse essere presente il file seriale dell'oggetto FilmGraph al fine di ottimizzare il calcolo computazionale del sistema; qualora non dovesse essere presente, si passa alla fase di creazione del nuovo grafo, in particolare un multigrafo sparso direzionato, partendo dal multigrafo sparso non direzionato creato in precedenza.
+Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film di movielens presenti nel file di configurazione, mentre come archi tutti i possibili percorsi di lunghezza 2 necessari ad arrivare dal film sorgente al film destinatario, ad esempio: Partendo dal grafo delle risorse cosi composto 
+\begin{figure}[H]
+	\begin{tabular}
+	content...
+	\end{tabular}
+	\begin{tikzpicture}
+	[lineDecorate/.style={-,thick},%
+	  actor/.style={shape=circle,inner sep=3pt,draw, thick},
+	  film/.style={shape=diamond,inner sep=4pt,draw,thick, fill=blue!15}]
+	
+	%% nodes or vertices
+	\foreach \nodename/\x/\y/\direction/\navigate in {
+	  $Django Unchained$/1/3/left/west, $Inglourious Basterds$/3/3/right/east, $Titanic$/1/1/below/south}
+	{
+	  \node (\nodename) at (\x,\y) [film] {};
+	  \node [\direction] at (\nodename.\navigate) {\footnotesize$\nodename$};
+	}
+	
+	\foreach \nodename/\x/\y/\direction/\navigate in {
+	  $Quentin Tarantino$/2/4/above/north, $Leonardo Di caprio$/1/2/left/west, $Christoph Waltz$/3/2/right/east}
+	{
+	  \node (\nodename) at (\x,\y) [actor] {};
+	  \node [\direction] at (\nodename.\navigate) {\footnotesize$\nodename$};
+	}
+	
+	%% edges or lines
+	\path
+	\foreach \startnode/\endnode in {$Django Unchained$/$Leonardo Di caprio$, $Django Unchained$/$Christoph Waltz$, $Inglourious Basterds$/$Christoph Waltz$, $Leonardo Di caprio$/$Titanic$}
+	{
+	  (\startnode) edge[lineDecorate,director edge] node {} (\endnode)
+	}
+	
+	\foreach \startnode/\endnode in {$Django Unchained$/$Quentin Tarantino$,$Quentin Tarantino$/$Inglourious Basterds$}
+	{
+	  (\startnode) edge[lineDecorate,bend left,actor edge] node {} (\endnode)
+	}
+	
+	\foreach \startnode/\endnode in {$Quentin Tarantino$/$Django Unchained$, $Inglourious Basterds$/$Quentin Tarantino$}
+	{
+	  (\startnode) edge[lineDecorate,bend left,director edge] node {} (\endnode)
+	};
+	
+	\end{tikzpicture}
+	\begin{tabular}{l l}
+	  \begin{tikzpicture}[film/.style={shape=diamond,inner sep=3pt,draw,thick, fill=blue!15}]
+	    \node (a) at (6,3) [film] {};
+	    \node [right] at (a.west) {\footnotesize};
+	  \end{tikzpicture}
+	  & Film \\
+	
+	 \begin{tikzpicture}[actor/.style={shape=circle,inner sep=3pt,draw, thick}]
+	    \node (a) at (9,3) [actor] {};
+	    \node [right] at (a.west) {\footnotesize};
+	 \end{tikzpicture}
+	 & Resource \\
+	
+	  \color{red}--- & Edge director \\
+	 \color{blue}--- & Edge actor \\
+	\end{tabular}	
+\end{figure}
 
-Il risultato di questa computazione sarà un multigrafo avente come vertice risorse quali film,attori,case produttrici,registi,ecc; mentre come arco un predicato che mette in relazione le due risorse quale ad esempio director,writer,music composer e cosi via.
 
-Per quanto riguarda il secondo obiettivo,all'interno della classe \textsc{FilmGraph} sarà presente un metodo il cui scopo sarà quello di convertire il multigrafo sparso non direzionato, in un nuovo multigrafo sparso direzionato i cui vertici saranno solo i film presenti nel db di movielens, mentre i cui archi saranno creati relazionando tra loro due archi definiti in precedenza aventi come soggetto della prima proprietà il film di partenza e come oggetto della seconda proprietà il film di destinazione.
+
+ metodo il cui scopo sarà quello di convertire il multigrafo sparso non direzionato, in un nuovo multigrafo sparso direzionato i cui vertici saranno solo i film presenti nel db di movielens, mentre i cui archi saranno creati relazionando tra loro due archi definiti in precedenza aventi come soggetto della prima proprietà il film di partenza e come oggetto della seconda proprietà il film di destinazione.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{./images/Diagrams/graph.png}
