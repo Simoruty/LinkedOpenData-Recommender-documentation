@@ -153,11 +153,11 @@ La prima ha lo scopo di definire la struttura dati che verrà restituita dalla r
 
 La seconda classe invece, ha come obiettivo quello di effettuare la vera e propria raccomandazione, per fare ciò, si andrà a creare una struttura dati di tipo hashmap avente come primo parametro caratterizzante le diverse tipologie di distanze, mentre come secondo parametro un ulteriore hashmap aventi come parametro i diversi film e come secondo la lista di raccomandazioni partendo dal film utilizzato come parametro del secondo map e come distanza, il valore numerico ottenuto dal calcolo effettuato dal package distance definito precedentemente \ref{Package distance}. 
 
-Graficamente la struttura dati può essere rappresentato in questo modo:
+Graficamente la struttura dati può essere rappresentata in questo modo:
 
 \begin{table}[H]
 	\begin{tabular}{l | l | l | l }
-	\emph{DISTANCE\_TYPE} & \emph{FILM\_SRC} & \emph{FILM\_DEST} & \emph{VAL\_DISTANCE} \\
+	\textbf{DISTANCE TYPE} & \textbf{FILM SRC} & \textbf{FILM DEST} & \textbf{VAL DISTANCE} \\
 	\toprule
 		\multirow{6}{*}{PassantD} & \multirow{3}{*}{Film1} & Film2 & 0.9 \\
 		&  & Film3 & 0.8 \\
@@ -178,8 +178,25 @@ Graficamente la struttura dati può essere rappresentato in questo modo:
 
 \subsection{Package movielens\_exp}
 Il package \emph{movielens\_exp} ha il compito di eseguire la vera e propria fase sperimentale del progetto; In base a quanto verrà definito in seguito nel protocollo sperimentale \ref{experiment},
+il primo compito che verrà svolto dalla classe \emph{Movielens} presente in questo package, sarà quello di creare per ogni utente presente nella lista di utenti estratti dal dataset di Movielens, sia un training set che un test set; per fare ciò, verranno estratti casualmente il 70\% delle votazioni che andranno a comporre il training set da utilizzare per addestrare il recommender system, mentre il rimanente 30\% da utilizzare per testare che i risultati siano coerenti con le rimanenti votazioni fatte dall'utente. Inoltre, al fine di permettere un confronto tra le varie sperimentazioni, è stato necessario salvare questi set che verranno utilizzati per tutte le diverse fasi sperimentative. Inoltre, tale classe, sarà anche in grado di salvare in maniera consistente i risultati della raccomandazione utilizzando una base di dati creata appositamente per questo fine.
 
+Dopo aver creato i vari set da utilizzare, sempre la stessa classe, utilizzando esclusivamente i training set dei vari utenti, avrà il compito di profilare gli utenti prendendo in considerazione i voti sia in maniera uniforme che in maniera pesata (la profilazione verrà descritta in dettaglio nel paragrafo \ref{profili}).
 
+Dopo aver eseguito questa prima fase di inizializzazione, si passerà alla creazione delle vere e proprie raccomandazioni e successiva verifica dei risultati ottenuti utilizzando diverse tipologie di metriche che verranno descritte in dettaglio nel paragrafo \ref{metriche}. Adibita a tale compito è la classe \emph{Metrics}, la quale ha come primo compito quella di creare, per ogni possibile coppia configurazione-utente, le vere e proprie raccomandazioni.
 
-innanzitutto viene eseguita la fase di splitting delle votazioni date da ogni utente ai vari film visionati allo scopo di creare i set di training e di test. Successivamente si passa alla creazione dei profili(\emph{pesato} e \emph{non pesato}) partendo dalle votazioni presenti all'interno del training set di ogni utente; infine nella parte finale della sperimentazione vengono calcolate le diverse tipologie di metriche descritte in \ref{metriche}.
+I risultati delle raccomandazioni, verranno passati, cosi come anche la configurazione e l'utente, ai due metodi presenti all'interno della classe stessa, denominati \emph{fillPrecision} e \emph{fillMRR}, i quali hanno rispettivamente il compito di calcolare la precision e la MRR di ogni singolo utente. In seguito, questi dati verranno utilizzati da un altro metodo presente all'interno della classe denominato \emph{computeAgg}, il quale andrà a calcolare tutte le diverse tipologie di metriche utilizzate per verificare l'efficienza della metodologia di raccomandazione utilizzata, in particolar modo verranno calcolate: 
+\begin{multicols}{2}
+\begin{itemize}
+	\item Micro Precision
+	\item Micro Precision Epurata
+	\item Micro MRR
+	\item Micro MRR Epurata 
+	\item Macro Precision
+	\item Macro Precision Epurata 
+	\item Macro MRR
+	\item Macro MRR Epurata 
+\end{itemize}
+\end{multicols}
+Per il calcolo delle metriche epurate, si prenderanno in considerazione solo i film presenti sia nel test set che nelle raccomandazioni ottenute, maggiori dettagli nel paragrafo \ref{metriche}.
 
+Una volta ultimato il calcolo computazionale, i risultati saranno memorizzati in maniera permanente all'interno della base di dati.
