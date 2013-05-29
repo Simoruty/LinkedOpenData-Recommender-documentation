@@ -25,6 +25,7 @@ Lo stesso package conterrà anche il metodo \emph{update} il quale avrà il comp
 Per quanto riguarda il secondo obiettivo,all'interno della classe \textsc{FilmGraph} sarà presente sempre un metodo \emph{load} il quale scopo è sempre quello di caricare qualora dovesse essere presente il file seriale dell'oggetto FilmGraph al fine di ottimizzare il calcolo computazionale del sistema; qualora non dovesse essere presente, si passa alla fase di creazione del nuovo grafo, in particolare un multigrafo sparso direzionato, partendo dal multigrafo sparso non direzionato creato in precedenza.
 Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film di movielens presenti nel file di configurazione, mentre come archi tutti i possibili percorsi di lunghezza 2 necessari ad arrivare dal film sorgente al film destinatario, ad esempio: Partendo dal grafo delle risorse cosi composto 
 \begin{figure}[H]
+	\begin{tabular}{l r}
 	\begin{tikzpicture}
 	[lineDecorate/.style={-,thick},%
 	  actor/.style={shape=circle,inner sep=3pt,draw, thick},
@@ -63,7 +64,7 @@ Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film d
 	};
 	
 	\end{tikzpicture}
-
+&
 	\begin{tabular}{l l}
 	 \begin{tikzpicture}[film/.style={shape=diamond,inner sep=3pt,draw,thick, fill=blue!15}]
 	  \node (a) at (6,3) [film] {};
@@ -80,6 +81,7 @@ Per fare ciò, il nuovo grafo avrà come vertici solo ed esclusivamente i film d
 	 \color{red}--- & \emph{Edge director} \\
 	 \color{blue}--- & \emph{Edge actor} \\
 	\end{tabular}	
+	\\	\end{tabular}
 \end{figure}
 Si ottiene un nuovo multigrafo sparso direzionato di questo tipo:
 \begin{figure}[H]
@@ -117,6 +119,7 @@ Si ottiene un nuovo multigrafo sparso direzionato di questo tipo:
 	\end{tikzpicture}
 \end{figure}
 
+Di seguito il diagramma delle classi del package graph:
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{./images/Diagrams/graph.png}
 	\caption{\emph{Class diagram: Package graph}}
